@@ -2,7 +2,7 @@ import random as rn
 
 def generate_random_list():
     """
-    Generation of list with random numbers from 0 to 999 inclusively
+    Generation of list with random numbers from 0 to 1000 inclusively
     :return: list of random numbers
     """
     return [rn.randint(0, 1000) for number in range(100)]
