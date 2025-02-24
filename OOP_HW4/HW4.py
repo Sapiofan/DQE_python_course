@@ -1,6 +1,7 @@
 import time
 from datetime import datetime
 
+# raise exception if dates are in incorrect format. In this case when inputted date is behind current time
 class WrongDateException(Exception):
     def __init__(self, message):
         super().__init__(message)
@@ -8,26 +9,31 @@ class WrongDateException(Exception):
     def __str__(self):
         return self.args[0]
 
+# parent class. It has category name, when the news is published, and line_limit for beautiful title view
 class Feed:
     def __init__(self, category):
         self.category = category
         self.publishing_date = datetime.now()
         self.line_limit = 25
 
+    # write our news (or entities) to the file
     def publish(self, entity):
         string = self.category + ' '.ljust(self.line_limit, '-') + '\n' + str(entity)
         with open("output.txt", "a") as file:
             file.write(string + "\n\n")
-        pass
+
+# news category. It has description and city, where it happened
 class News(Feed):
     def __init__(self, text, city):
         super().__init__("News")
         self.text = text
         self.city = city
 
+    # news representation for file writing and program printing
     def __str__(self):
         return f'{self.text}\n{self.city}, {self.publishing_date.strftime("%d/%m/%Y %H:%M")}'
 
+# Private Advertisement category. It has description and date, when it's expired
 class PrivateAd(Feed):
     def __init__(self, text, expiration_date):
         super().__init__("PrivateAd")
@@ -35,10 +41,14 @@ class PrivateAd(Feed):
         self.expiration_date = expiration_date
 
     def __str__(self):
+        # calculate in how many days the ad will expire
         date_diff = self.expiration_date - self.publishing_date
         day_diff = date_diff.days
+        # return Ad representation for file writing
         return f'{self.text}\nActual until: {self.expiration_date.strftime("%d/%m/%Y %H:%M")}, {day_diff} days left'
 
+# entertainment category. It has description; place where event will be conducted;
+# price for ticket; time, when it's started
 class Entertainment(Feed):
     def __init__(self, description, place, price, time):
         super().__init__("Entertainment")
@@ -51,7 +61,9 @@ class Entertainment(Feed):
         string = f"{self.text}\nWhere event will be conducted: {self.place}\nPrice: {self.price}\nStart at: {self.time}"
         return string
 
+# the class, which handles user input
 class InputHandling:
+    # while choosing category user always should input number
     @staticmethod
     def choose_category():
         while True:
@@ -60,6 +72,7 @@ class InputHandling:
             except:
                 print('Input number pls from the list. Try once again')
 
+    # for price we always expect number with dot
     @staticmethod
     def get_price():
         while True:
@@ -69,12 +82,14 @@ class InputHandling:
             except ValueError:
                 print("Invalid input. Please enter a valid decimal number.")
 
+    # get valid date from user in format dd/MM/yyyy hh:mm
     @staticmethod
     def get_date_time():
         while True:
             try:
                 date = datetime.strptime(input(), "%d/%m/%Y %H:%M")
                 if date <= datetime.now():
+                    # raise custom exception, if the date is behind current time
                     raise WrongDateException('The date and time must be in the future. Please enter a valid date and time.')
                 return date
             except ValueError:
@@ -82,6 +97,7 @@ class InputHandling:
             except WrongDateException as e:
                 print(e)
 
+# interface for communication with user and getting info from them
 def driver():
     while True:
         print("Choose category for publishing:\n1. News\n2. PrivateAd\n3. Entertainment\n4. Quit")
