@@ -17,10 +17,13 @@ class Feed:
         self.line_limit = 25
 
     # write our news (or entities) to the file
-    def publish(self, entity):
+    def publish(self, entity, path = "output.txt"):
         string = self.category + ' '.ljust(self.line_limit, '-') + '\n' + str(entity)
-        with open("output.txt", "a") as file:
+        with open(path, "a") as file:
             file.write(string + "\n\n")
+
+    def set_publishing_date(self, date):
+        self.publishing_date = date
 
 # news category. It has description and city, where it happened
 class News(Feed):
@@ -76,7 +79,7 @@ class InputHandling:
     @staticmethod
     def get_price():
         while True:
-            user_input = input("Enter a decimal number: ")
+            user_input = input()
             try:
                 return round(float(user_input), 2)
             except ValueError:
@@ -131,4 +134,5 @@ def driver():
             case _:
                 break
 
-driver()
+if __name__ == '__main__':
+    driver()
