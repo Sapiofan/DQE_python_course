@@ -51,7 +51,7 @@ class FileHandler:
             components = line.split(';')
             if components[0].lower() == "news":
                 if len(components) == 4 and InputChecker.is_date(components[3]):
-                    news = News(capitalize(components[1].lower()), components[2])
+                    news = News(capitalize(components[1].lower()), capitalize(components[2].lower()))
                     news.set_publishing_date(convert_to_date(components[3]))
                     entities.append(news)
             elif components[0].lower() == "privatead":
@@ -61,7 +61,7 @@ class FileHandler:
                     entities.append(ad)
             elif components[0].lower() == "entertainment":
                 if len(components) == 5 and InputChecker.is_date(components[4]) and InputChecker.is_price(components[3]):
-                    ent = Entertainment(capitalize(components[1].lower()), components[2], components[3],
+                    ent = Entertainment(capitalize(components[1].lower()), capitalize(components[2].lower()), components[3],
                                         convert_to_date(components[4]))
                     entities.append(ent)
 

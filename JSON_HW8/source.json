@@ -1,0 +1,20 @@
+[
+  {
+    "type": "News",
+    "desc": "Something happened",
+    "place": "London",
+    "posted": "24/02/2025 14:36"
+  },
+  {
+    "type": "PrivateAd",
+    "desc": "Some advertisement",
+    "expired_at": "15/12/2025 14:30"
+  },
+  {
+    "type": "Entertainment",
+    "desc": "Entertainment description",
+    "place": "Baker Street 221B, London",
+    "price": 14.35,
+    "time": "15/11/2056 09:00"
+  }
+]
