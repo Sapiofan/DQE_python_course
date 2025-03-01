@@ -1,5 +1,6 @@
 import time
 from datetime import datetime
+from CSV_HW7.HW7 import *
 
 # raise exception if dates are in incorrect format. In this case when inputted date is behind current time
 class WrongDateException(Exception):
@@ -21,9 +22,20 @@ class Feed:
         string = self.category + ' '.ljust(self.line_limit, '-') + '\n' + str(entity)
         with open(path, "a") as file:
             file.write(string + "\n\n")
+        self.__update_csv_counter(path)
 
     def set_publishing_date(self, date):
         self.publishing_date = date
+
+    def __update_csv_counter(self, path):
+        with open(path) as file:
+            text = file.read()
+            word_count_list = word_counter(text)
+            letter_count = letter_counter(text)
+            word_header = ['word', 'count']
+            letter_header = ['letter', 'letter_count', 'uppercase_letter_count', 'percentage']
+            write_to_csv(word_header, word_count_list, 'word_count.csv')
+            write_to_csv(letter_header, letter_count, 'letter_count.csv')
 
 # news category. It has description and city, where it happened
 class News(Feed):

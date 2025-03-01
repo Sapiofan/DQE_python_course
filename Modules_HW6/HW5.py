@@ -78,7 +78,7 @@ def convert_to_date(string):
     return datetime.strptime(string.strip(), "%d/%m/%Y %H:%M")
 
 # communication with user
-def driver_hw5():
+def driver_hw6():
     print("Do you want to\n1. Import news data\n2. Input manually")
     user_choice = InputHandling.choose_category()
     match (user_choice):
@@ -107,4 +107,5 @@ def driver_hw5():
         case 2:
             driver()
 
-driver_hw5()
+if __name__ == '__main__':
+    driver_hw6()
