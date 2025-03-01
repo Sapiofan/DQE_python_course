@@ -60,8 +60,7 @@ class FileHandler:
                                    convert_to_date(components[2]))
                     entities.append(ad)
             elif components[0].lower() == "entertainment":
-                if len(components) == 4 and InputChecker.is_date(components[3]) and InputChecker.is_price(components[2])\
-                        and InputChecker.is_date(components[5]):
+                if len(components) == 5 and InputChecker.is_date(components[4]) and InputChecker.is_price(components[3]):
                     ent = Entertainment(capitalize(components[1].lower()), components[2], components[3],
                                         convert_to_date(components[4]))
                     entities.append(ent)
